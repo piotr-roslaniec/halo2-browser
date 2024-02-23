@@ -3,3 +3,4 @@ Cargo.lock
 *.bin
 bin
 .DS_Store
+node_modules

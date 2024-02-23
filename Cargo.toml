@@ -1,5 +1,5 @@
 [workspace]
-members = ["halo2-wasm"]
+members = ["halo2-wasm", "halo2-wasm/template"]
 resolver = "2"
 
 [profile.dev]
@@ -30,3 +30,16 @@ lto = "fat"
 # codegen-units = 1
 panic = "unwind"
 incremental = false
+
+[patch."https://github.com/Cardinal-Cryptography/halo2-lib.git"]
+halo2-base = { path = "../halo2-lib/halo2-base" }
+halo2-ecc = { path = "../halo2-lib/halo2-ecc" }
+halo2_proofs = { path = "../pse-halo2/halo2_proofs" }
+
+[patch.crates-io]
+halo2-base = { path = "../halo2-lib/halo2-base" }
+halo2-ecc = { path = "../halo2-lib/halo2-ecc" }
+halo2_proofs = { path = "../pse-halo2/halo2_proofs" }
+
+[patch."https://github.com/Cardinal-Cryptography/pse-halo2.git"]
+halo2_proofs = { path = "../pse-halo2/halo2_proofs" }
