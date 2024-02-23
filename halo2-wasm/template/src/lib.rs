@@ -6,6 +6,7 @@ use halo2_base::poseidon::hasher::spec::OptimizedPoseidonSpec;
 use halo2_base::poseidon::hasher::PoseidonHasher;
 pub use halo2_wasm::Halo2Wasm;
 use std::{cell::RefCell, rc::Rc};
+use std::fmt::Debug;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -27,9 +28,9 @@ impl MyCircuit {
     }
 
     #[wasm_bindgen()]
-    pub fn run(&mut self) {
+    pub fn run(&mut self, iterations: u32) -> String {
         // Replace with your circuit, making sure to use `self.builder`
-        let input = (0..10).map(|i| {
+        let input = (0..iterations as usize).map(|i| {
             self.builder
                 .borrow_mut()
                 .main(0)
@@ -41,7 +42,9 @@ impl MyCircuit {
 
         let result = input.reduce(|acc, a| {
             poseidon.hash_fix_len_array(self.builder.borrow_mut().main(0), &self.gate, &[acc, a])
-        });
-        assert!(result.is_some());
+        }).unwrap();
+
+        let result_as_string = format!("{:?}", result);
+        result_as_string
     }
 }

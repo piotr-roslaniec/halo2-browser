@@ -16,6 +16,6 @@ halo2-base = { git = "https://github.com/Cardinal-Cryptography/halo2-lib.git", b
 halo2-wasm = { path = "..", default-features = false }
 
 [features]
-default = []
-#default = ["rayon"]
-#rayon = ["halo2-wasm/rayon"]
+#default = []
+default = ["rayon"]
+rayon = ["halo2-wasm/rayon"]

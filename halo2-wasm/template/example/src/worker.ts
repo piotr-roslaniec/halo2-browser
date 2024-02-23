@@ -1,7 +1,7 @@
 
 import init from "halo2-wasm-template";
 import {
-    // initThreadPool,
+    initThreadPool,
     initPanicHook,
     Halo2Wasm,
     MyCircuit,
@@ -12,16 +12,18 @@ import {expose} from "comlink";
 // import {getHalo2Wasm} from "@axiom-crypto/halo2-wasm";
 
 export class Halo2Benchmark {
-    async templateExample(): Promise<number> {
+    async templateExample(iterations: number, threads?: number): Promise<number> {
         console.log("BenchmarkWorker: templateExample()")
         await init();
         initPanicHook();
-        // await initThreadPool(2);
+        if (threads) {
+            await initThreadPool(threads);
+        }
         const halo2wasm = new Halo2Wasm();
         const myCircuit = new MyCircuit(halo2wasm);
         console.log({myCircuit});
         const start = Date.now();
-        myCircuit.run();
+        myCircuit.run(iterations);
         const timeSpent = Date.now() - start;
         console.log(`run() took ${timeSpent}ms`)
         console.log("BenchmarkWorker: templateExample() done")
